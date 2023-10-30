@@ -10,13 +10,11 @@ def run():
         page_icon="⚖️",
     )
 
-    st.write("# Hello! 👋")
-
-    st.sidebar.success("Select a demo above.")
+    st.write("# Привіт! 👋")
 
     st.markdown(
         """
-        **👈 Для початку роботи введи код доступу**
+        **Для початку роботи введи код доступу**
         ### Потім обери розділ, який тебе цікавить:
         - Аналітика [Analytics](https://litigation.streamlit.app/Analytics)
         - Графік засідань [Grafic](https://litigation.streamlit.app/Grafic)
