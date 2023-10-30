@@ -25,6 +25,9 @@ def run():
     """
     )
 
+if __name__ == "__main__":
+    run()
+
 # Authentication
 def check_password():
     """Returns `True` if the user had the correct password."""
@@ -56,6 +59,3 @@ if not check_password():
 # Main Streamlit app starts here
 st.write("Here goes your normal Streamlit app...")
 st.button("Click me")
-
-if __name__ == "__main__":
-    run()
