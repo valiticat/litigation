@@ -10,21 +10,21 @@ def run():
         page_icon="⚖️",
     )
 
-    st.write("# Привіт! 👋")
-
-    st.markdown(
-        """
-        **Для початку роботи введи код доступу**
-        ### Потім обери розділ, який тебе цікавить:
-        - Аналітика [Analytics](https://litigation.streamlit.app/Analytics)
-        - Графік засідань [Grafic](https://litigation.streamlit.app/Grafic)
-        - Судові справи [LTG](https://litigation.streamlit.app/LTG)
-        - Виконавчі провадження [VP](https://litigation.streamlit.app/VP)
-    """
-    )
-
 if __name__ == "__main__":
     run()
+
+st.write("# Привіт! 👋")
+
+st.markdown(
+    """
+    **Для початку роботи введи код доступу**
+    ### Потім обери розділ, який тебе цікавить:
+    - Аналітика [Analytics](https://litigation.streamlit.app/Analytics)
+    - Графік засідань [Grafic](https://litigation.streamlit.app/Grafic)
+    - Судові справи [LTG](https://litigation.streamlit.app/LTG)
+    - Виконавчі провадження [VP](https://litigation.streamlit.app/VP)
+"""
+)
 
 # Authentication
 def check_password():
@@ -49,7 +49,6 @@ def check_password():
     if "password_correct" in st.session_state:
         st.error("😕 Password incorrect!")
     return False
-
 
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
