@@ -21,6 +21,7 @@ def run():
         - Графік засідань [Grafic](https://litigation.streamlit.app/Grafic)
         - Судові справи [LTG](https://litigation.streamlit.app/LTG)
         - Виконавчі провадження [VP](https://litigation.streamlit.app/VP)
+        - test [test](https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app/)
     """
     )
 
