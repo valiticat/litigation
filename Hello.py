@@ -41,6 +41,9 @@ if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
 # Main Streamlit app starts here
+
+
+
 st.markdown(
     """
     **Для початку роботи введи код доступу**
