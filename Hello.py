@@ -46,7 +46,7 @@ if not check_password():
 # Connect to Database
 @st.cache_resource
 def init_connection():
-    return pymongo.MongoClient(**st.secrets["mongo"]["ltg_db"])
+    return pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
 
 client = init_connection()
 
