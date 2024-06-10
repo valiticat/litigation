@@ -45,11 +45,12 @@ if not check_password():
 
 # Connect to Database
 @st.cache_resource
-def init_connection():
-    client = pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
-    return client.ltg_db.pm_tlg
+def connect_ltg_db():
+    db_client = pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
+    db = db_client.get_database('ltg_db')
+    return db.pm_ltg
 
-client = init_connection()
+ltg_db = connect_ltg_db()
 
 # def connect_ltg_db():
 #     db = pymongo.MongoClient(
@@ -89,4 +90,4 @@ st.markdown(
 """
 )
 
-print(client.find_one({}))
+print(ltg_db.find_one({}))
