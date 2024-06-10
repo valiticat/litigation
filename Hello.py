@@ -108,13 +108,13 @@ for edoc in edocs:
     if court_title != "-":
         st.write(f"🏛️{court_title}")
     
-    ops_text = edoc.get('ops_text')
-    if doc_title != "-":
-        st.write(f"👩🏻‍⚖️{ops_text}")
-    
     task_text = edoc.get('task_text')
     if doc_title != "-":
         st.write(f"{clean_edoc(task_text)}")
+    
+    ops_text = edoc.get('ops_text')
+    if doc_title != "-":
+        st.write(f"👩🏻‍⚖️{ops_text}")
     
     st.write("")
 
