@@ -43,6 +43,11 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
+# Functions
+def clean_edoc(input_edoc):
+    cleaned_edoc = input_edoc.replace('e.court@court.gov.ua', '')
+    return cleaned_edoc
+
 # Connect to Database
 @st.cache_resource
 def init_connection():
@@ -53,6 +58,7 @@ mongo_client = init_connection()
 @st.cache_data(ttl=600)
 def get_ecourt_data(input_case_num):
     #pm = mongo_client.ltg_db.pm_ltg.find_one({})
+    input_case_num = input_case_num.replace('№', '').strip()
     data = mongo_client.ltg_db.ec_docs.find({'case_num' : input_case_num})
     docs = []
     for elem in data:
@@ -85,5 +91,6 @@ case_num = st.text_input("Знайти інформацію за номером 
 edocs = get_ecourt_data(case_num)
 
 for edoc in edocs:
-    st.write(edoc)
+    st.write(clean_edoc(edoc))
+    st.write("")
 
