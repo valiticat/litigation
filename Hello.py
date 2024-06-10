@@ -48,23 +48,25 @@ if not check_password():
 def init_connection():
     return pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
 
-client = init_connection()
+mongo_client = init_connection()
 
 @st.cache_data(ttl=600)
-def get_pm_data():
-    return client.ltg_db.pm_ltg.find_one({})
+def get_data():
+    pm = mongo_client.ltg_db.pm_ltg.find_one({})
+    ecourt = mongo_client.ltg_db.ec_docs.find_one({})
+    return pm, ecourt
 
-pm_db = get_pm_data()
+pm, ecourt = get_data()
 
 # Main Streamlit app starts here
 
 st.markdown(
     """
     ### Обери потрібний розділ:
-    📊 [Аналітика](https://litigation.streamlit.app/Analytics)
-    📅 [Графік засідань](https://litigation.streamlit.app/Grafic)
-    ⚖️ [Судові рішення](https://litigation.streamlit.app/LTG)
-    💰 [Виконавчі провадження](https://litigation.streamlit.app/VP)
+    📊 [Аналітика](https://litigation.streamlit.app/Analytics)\n
+    📅 [Графік засідань](https://litigation.streamlit.app/Grafic)\n
+    ⚖️ [Судові рішення](https://litigation.streamlit.app/LTG)\n
+    💰 [Виконавчі провадження](https://litigation.streamlit.app/VP)\n
 """
 )
 
