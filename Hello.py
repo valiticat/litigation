@@ -61,10 +61,16 @@ def get_ecourt_data(input_case_num):
     input_case_num = input_case_num.replace('№', '').strip()
     data = mongo_client.ltg_db.ec_docs.find({'case_num' : input_case_num})
     docs = []
-    for elem in data:
-        text = elem.get('task_txt', "-")
-        if text != "-":
-            docs.append(text)
+    for elem in data:          
+        docs.append(
+            {
+                'doc_title' : elem.get('doc_title', "-"),
+                'doc_eid' : elem.get('doc_eid', "-"),
+                'court_title' : elem.get('court_title', "-"),
+                'ops_text' : elem.get('ops_txt', "-"),
+                'task_text' : elem.get('task_txt', "-")
+            }
+        )
     return docs
 
 # Main Streamlit app starts here
@@ -91,6 +97,11 @@ case_num = st.text_input("Знайти інформацію за номером 
 edocs = get_ecourt_data(case_num)
 
 for edoc in edocs:
-    st.write(clean_edoc(edoc))
-    st.write("")
-
+    st.write(
+        edoc.get('doc_title'),
+        edoc.get('doc_eid'),
+        edoc.get('court_title'),
+        edoc.get('ops_text'),
+        clean_edoc(edoc.get('task_text')),
+        ""
+    )
