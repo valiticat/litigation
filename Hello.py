@@ -63,13 +63,13 @@ pm, ecourt = get_data()
 st.markdown(
     """
     ### Обери потрібний розділ:
-    📊 [Аналітика](https://litigation.streamlit.app/Analytics)\n
-    📅 [Графік засідань](https://litigation.streamlit.app/Grafic)\n
     ⚖️ [Судові рішення](https://litigation.streamlit.app/LTG)\n
+    📅 [Графік засідань](https://litigation.streamlit.app/Grafic)\n
     💰 [Виконавчі провадження](https://litigation.streamlit.app/VP)\n
+    📊 [Аналітика](https://litigation.streamlit.app/Analytics)\n
 """
 )
 
-#print(ltg_db.find_one({}))
+st.write(pm)
 
-st.write(pm_db)
+st.write(pm)
