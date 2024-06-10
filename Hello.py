@@ -48,6 +48,7 @@ if not check_password():
 def clean_edoc(input_edoc):
     cleaned_edoc = input_edoc.replace('e.court@court.gov.ua', '')
     cleaned_edoc = re.sub(r'\[(.*?)\]', '', cleaned_edoc)
+    cleaned_doc = re.sub(r'(?<!\.)\n', '', cleaned_doc)
     return cleaned_edoc
 
 # Connect to Database
