@@ -83,3 +83,6 @@ case_num = st.text_input("Знайти інформацію за номером 
 
 # Get the list of docs (task_text)
 edocs = get_ecourt_data(case_num)
+
+st.write(edocs)
+
