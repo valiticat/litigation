@@ -45,12 +45,21 @@ if not check_password():
 
 # Connect to Database
 @st.cache_resource
-def init_connection():
-    return pymongo.MongoClient(
-        **st.secrets["mongo"],
+def connect_ltg_db():
+    db = pymongo.MongoClient(
+        st.secrets["mongo"]["ltg_db_url"], 
         server_api=ServerApi('1')).get_database('ltg_db')
+    return db.mycases, db.docs
+    
+mycases, docs_cln = connect_ltg_db()
 
-client = init_connection()
+
+# def init_connection():
+#     return pymongo.MongoClient(
+#         **st.secrets["mongo"],
+#         server_api=ServerApi('1')).get_database('ltg_db')
+
+# client = init_connection()
 
 # def connect_ltg_db():
 #     db = pymongo.MongoClient(
@@ -60,15 +69,14 @@ client = init_connection()
     
 # mycases, docs_cln = connect_ltg_db()
 
+# @st.cache_data(ttl=600)
+# def get_data():
+#     #db = client.ltg_db
+#     items = client.pm_ltg
+#     items = list(items)  # make hashable for st.cache_data
+#     return items
 
-@st.cache_data(ttl=600)
-def get_data():
-    #db = client.ltg_db
-    items = client.pm_ltg
-    items = list(items)  # make hashable for st.cache_data
-    return items
-
-items = get_data()
+# items = get_data()
 
 # Main Streamlit app starts here
 
