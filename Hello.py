@@ -2,6 +2,7 @@ import streamlit as st
 import hmac # Used in the authentication
 from streamlit.logger import get_logger
 import pymongo
+from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
 LOGGER = get_logger(__name__)
