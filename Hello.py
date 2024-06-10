@@ -47,7 +47,7 @@ if not check_password():
 @st.cache_resource
 def connect_ltg_db():
     db = pymongo.MongoClient(
-        st.secrets["mongo"], 
+        **st.secrets["mongo"], 
         server_api=ServerApi('1')).get_database('ltg_db')
     return db.mycases, db.docs
     
@@ -90,4 +90,4 @@ st.markdown(
 """
 )
 
-print(items.find_one({}))
+print(mycases.find_one({}))
