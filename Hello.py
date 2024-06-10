@@ -2,8 +2,8 @@ import streamlit as st
 import hmac # Used in the authentication
 from streamlit.logger import get_logger
 import pymongo
-from pymongo import MongoClient
-from pymongo.server_api import ServerApi
+#from pymongo import MongoClient
+#from pymongo.server_api import ServerApi
 
 LOGGER = get_logger(__name__)
 
@@ -45,21 +45,11 @@ if not check_password():
 
 # Connect to Database
 @st.cache_resource
-def connect_ltg_db():
-    db = pymongo.MongoClient(
-        **st.secrets["mongo"], 
-        server_api=ServerApi('1')).get_database('ltg_db')
-    return db.mycases, db.docs
-    
-mycases, docs_cln = connect_ltg_db()
+def init_connection():
+    client = pymongo.MongoClient(**st.secrets["mongo"])
+    return client.ltg_db.pm_tlg
 
-
-# def init_connection():
-#     return pymongo.MongoClient(
-#         **st.secrets["mongo"],
-#         server_api=ServerApi('1')).get_database('ltg_db')
-
-# client = init_connection()
+client = init_connection()
 
 # def connect_ltg_db():
 #     db = pymongo.MongoClient(
@@ -71,8 +61,17 @@ mycases, docs_cln = connect_ltg_db()
 
 # @st.cache_data(ttl=600)
 # def get_data():
-#     #db = client.ltg_db
-#     items = client.pm_ltg
+#     db = client.mydb
+#     items = db.mycollection.find()
+#     items = list(items)  # make hashable for st.cache_data
+#     return items
+
+# items = get_data()
+
+# @st.cache_data(ttl=600)
+# def get_data():
+#     db = client.ltg_db
+#     items = db.pm_ltg
 #     items = list(items)  # make hashable for st.cache_data
 #     return items
 
@@ -90,4 +89,4 @@ st.markdown(
 """
 )
 
-print(mycases.find_one({}))
+print(client.find_one({}))
