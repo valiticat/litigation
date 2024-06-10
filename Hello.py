@@ -51,12 +51,15 @@ def init_connection():
 mongo_client = init_connection()
 
 @st.cache_data(ttl=600)
-def get_data():
-    pm = mongo_client.ltg_db.pm_ltg.find_one({})
-    ecourt = mongo_client.ltg_db.ec_docs.find_one({})
-    return pm, ecourt
-
-pm, ecourt = get_data()
+def get_ecourt_data(input_case_num):
+    #pm = mongo_client.ltg_db.pm_ltg.find_one({})
+    data = mongo_client.ltg_db.ec_docs.find({'case_num' : input_case_num})
+    docs = []
+    for elem in data:
+        text = elem.get('task_txt', "-")
+        if text != "-":
+            docs.append(text)
+    return docs
 
 # Main Streamlit app starts here
 
@@ -72,8 +75,11 @@ pm, ecourt = get_data()
 
 case_num = st.text_input("Знайти інформацію за номером справи", "Номер справи")
 
-options = st.multiselect(
-    "",
-    ["Рішення", "Засідання"],
-    ["Рішення", "Засідання"])
+# options = st.multiselect(
+#     "Шукати",
+#     ["Рішення", "Засідання"],
+#     ["Рішення", "Засідання"])
 
+
+# Get the list of docs (task_text)
+edocs = get_ecourt_data(case_num)
