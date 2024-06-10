@@ -3,4 +3,5 @@ numpy
 pandas
 pydeck
 streamlit
-pymongo
+dnspython==2.6.1
+pymongo==4.7.3
