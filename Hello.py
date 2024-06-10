@@ -99,7 +99,7 @@ edocs = get_ecourt_data(case_num)
 for edoc in edocs:
     st.write(
         f"""
-        📃[{edoc.get('doc_title')}](https://cabinet.court.gov.ua/document/edoc.get('doc_eid'))
+        📃[{edoc.get('doc_title')}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})
     """
     )
 
