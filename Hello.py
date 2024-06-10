@@ -98,10 +98,10 @@ edocs = get_ecourt_data(case_num)
 
 for edoc in edocs:
     st.markdown(
-        """
-        📃[{edoc.get('doc_title')}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')}),
-        🏛️{edoc.get('court_title')}
-        💡{edoc.get('ops_text')}
-        {clean_edoc(edoc.get('task_text'))}
+        f"""
+        📃[{edoc.get('doc_title')}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})\n
+        🏛️{edoc.get('court_title')}\n
+        💡{edoc.get('ops_text')}\n
+        {clean_edoc(edoc.get('task_text'))}\n
     """
     )
