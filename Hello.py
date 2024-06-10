@@ -97,11 +97,9 @@ case_num = st.text_input("Знайти інформацію за номером 
 edocs = get_ecourt_data(case_num)
 
 for edoc in edocs:
-    st.markdown(
-        f"""
-        📃[{edoc.get('doc_title')}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})
-        🏛️{edoc.get('court_title')}
-        💡{edoc.get('ops_text')}
-        {clean_edoc(edoc.get('task_text'))}
-    """
-    )
+    st.write(f"📃[{edoc.get('doc_title')}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})")
+    st.write(f"🏛️{edoc.get('court_title')}")
+    st.write(f"💡{edoc.get('ops_text')}")
+    st.write(f"{clean_edoc(edoc.get('task_text'))}")
+
+
