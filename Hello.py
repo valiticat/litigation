@@ -58,7 +58,7 @@ def get_ecourt_data(input_case_num):
     for elem in data:
         text = elem.get('task_txt', "-")
         if text != "-":
-            docs.append(text)
+            docs.append(text.get(0))
     return docs
 
 # Main Streamlit app starts here
@@ -73,7 +73,7 @@ def get_ecourt_data(input_case_num):
 # """
 # )
 
-case_num = st.text_input("Знайти інформацію за номером справи", "Номер справи")
+case_num = st.text_input("Знайти інформацію за номером справи", "420/8320/23")
 
 # options = st.multiselect(
 #     "Шукати",
