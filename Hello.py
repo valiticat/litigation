@@ -60,16 +60,19 @@ pm, ecourt = get_data()
 
 # Main Streamlit app starts here
 
-st.markdown(
-    """
-    ### Обери потрібний розділ:
-    ⚖️ [Судові рішення](https://litigation.streamlit.app/LTG)\n
-    📅 [Графік засідань](https://litigation.streamlit.app/Grafic)\n
-    💰 [Виконавчі провадження](https://litigation.streamlit.app/VP)\n
-    📊 [Аналітика](https://litigation.streamlit.app/Analytics)\n
-"""
-)
+# st.markdown(
+#     """
+#     ### Обери потрібний розділ:
+#     ⚖️ [Судові рішення](https://litigation.streamlit.app/LTG)\n
+#     📅 [Графік засідань](https://litigation.streamlit.app/Grafic)\n
+#     💰 [Виконавчі провадження](https://litigation.streamlit.app/VP)\n
+#     📊 [Аналітика](https://litigation.streamlit.app/Analytics)\n
+# """
+# )
 
-st.write(pm)
+case_num = st.text_input("Знайти інформацію за номером справи", "Номер справи")
 
-st.write(pm)
+options = st.multiselect(
+    "",
+    ["Рішення", "Засідання"])
+
