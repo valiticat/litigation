@@ -45,38 +45,27 @@ if not check_password():
 
 # Connect to Database
 @st.cache_resource
-def connect_ltg_db():
-    db_client = pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
-    db = db_client.get_database('ltg_db')
-    return db.pm_ltg
+def init_connection():
+    return pymongo.MongoClient(**st.secrets["mongo"])
 
-ltg_db = connect_ltg_db()
+client = init_connection()
+
+@st.cache_data(ttl=600)
+def get_data():
+    db = client.ltg_db
+    items = db.pm_ltg.find_one({})
+    #items = list(items)  # make hashable for st.cache_data
+    return items
+
+items = get_data()
+
 
 # def connect_ltg_db():
-#     db = pymongo.MongoClient(
-#         st.secrets["mongo"]["ltg_db_url"], 
-#         server_api=ServerApi('1')).get_database('ltg_db')
-#     return db.mycases, db.docs
-    
-# mycases, docs_cln = connect_ltg_db()
+#     db_client = pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
+#     db = db_client.get_database('ltg_db')
+#     return db.pm_ltg
 
-# @st.cache_data(ttl=600)
-# def get_data():
-#     db = client.mydb
-#     items = db.mycollection.find()
-#     items = list(items)  # make hashable for st.cache_data
-#     return items
-
-# items = get_data()
-
-# @st.cache_data(ttl=600)
-# def get_data():
-#     db = client.ltg_db
-#     items = db.pm_ltg
-#     items = list(items)  # make hashable for st.cache_data
-#     return items
-
-# items = get_data()
+# ltg_db = connect_ltg_db()
 
 # Main Streamlit app starts here
 
@@ -90,4 +79,6 @@ st.markdown(
 """
 )
 
-print(ltg_db.find_one({}))
+#print(ltg_db.find_one({}))
+
+st.write(items)
