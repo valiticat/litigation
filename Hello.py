@@ -51,21 +51,10 @@ def init_connection():
 client = init_connection()
 
 @st.cache_data(ttl=600)
-def get_data():
-    db = client.ltg_db
-    items = db.pm_ltg.find_one({})
-    #items = list(items)  # make hashable for st.cache_data
-    return items
+def get_pm_data():
+    return client.ltg_db.pm_ltg.find_one({})
 
-items = get_data()
-
-
-# def connect_ltg_db():
-#     db_client = pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
-#     db = db_client.get_database('ltg_db')
-#     return db.pm_ltg
-
-# ltg_db = connect_ltg_db()
+pm_db = get_pm_data()
 
 # Main Streamlit app starts here
 
@@ -81,4 +70,4 @@ st.markdown(
 
 #print(ltg_db.find_one({}))
 
-st.write(items)
+st.write(pm_db)
