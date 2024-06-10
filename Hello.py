@@ -2,6 +2,7 @@ import streamlit as st
 import hmac # Used in the authentication
 from streamlit.logger import get_logger
 import pymongo
+import re
 #from pymongo import MongoClient
 #from pymongo.server_api import ServerApi
 
@@ -46,6 +47,7 @@ if not check_password():
 # Functions
 def clean_edoc(input_edoc):
     cleaned_edoc = input_edoc.replace('e.court@court.gov.ua', '')
+    cleaned_edoc = re.sub(r'\[(.*?)\]', '', cleaned_edoc)
     return cleaned_edoc
 
 # Connect to Database
