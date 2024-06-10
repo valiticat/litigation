@@ -1,6 +1,7 @@
 import streamlit as st
 import hmac # Used in the authentication
 from streamlit.logger import get_logger
+import pymongo
 
 LOGGER = get_logger(__name__)
 
@@ -40,14 +41,32 @@ def check_password():
 if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
+# Connect to Database
+@st.cache_resource
+def init_connection():
+    return pymongo.MongoClient(**st.secrets["mongo"])
+
+client = init_connection()
+
+@st.cache_data(ttl=600)
+def get_data():
+    db = client.ltg_db
+    items = db.pm_ltg.find()
+    items = list(items)  # make hashable for st.cache_data
+    return items
+
+items = get_data()
+
 # Main Streamlit app starts here
 
 st.markdown(
     """
     ### Обери потрібний розділ:
-    - 📊[Аналітика](https://litigation.streamlit.app/Analytics)
-    - 📅[Графік засідань](https://litigation.streamlit.app/Grafic)
-    - ⚖️[Судові рішення](https://litigation.streamlit.app/LTG)
-    - 💰[Виконавчі провадження](https://litigation.streamlit.app/VP)
+    📊 [Аналітика](https://litigation.streamlit.app/Analytics)
+    📅 [Графік засідань](https://litigation.streamlit.app/Grafic)
+    ⚖️ [Судові рішення](https://litigation.streamlit.app/LTG)
+    💰 [Виконавчі провадження](https://litigation.streamlit.app/VP)
 """
 )
+
+print(items.find_one({}))
