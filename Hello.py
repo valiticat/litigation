@@ -42,15 +42,12 @@ if not check_password():
 
 # Main Streamlit app starts here
 
-
-
 st.markdown(
     """
-    **Для початку роботи введи код доступу**
-    ### Потім обери розділ, який тебе цікавить:
-    - Аналітика [Analytics](https://litigation.streamlit.app/Analytics)
-    - Графік засідань [Grafic](https://litigation.streamlit.app/Grafic)
-    - Судові справи [LTG](https://litigation.streamlit.app/LTG)
-    - Виконавчі провадження [VP](https://litigation.streamlit.app/VP)
+    ### Обери потрібний розділ:
+    - 📊[Аналітика](https://litigation.streamlit.app/Analytics)
+    - 📅[Графік засідань](https://litigation.streamlit.app/Grafic)
+    - ⚖️[Судові рішення](https://litigation.streamlit.app/LTG)
+    - 💰[Виконавчі провадження](https://litigation.streamlit.app/VP)
 """
 )
