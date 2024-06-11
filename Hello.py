@@ -104,22 +104,22 @@ for edoc in edocs:
           
     date_rec = edoc.get('task_date')
     if date_rec != "-":
-        st.write(f"{date_rec}")
+        st.write(f"Отримано: {date_rec}")
     
     doc_title = edoc.get('doc_title')
-    if doc_title != "-":
+    if doc_title != "-" and doc_title is not None:
         st.write(f"📃[{doc_title.title()}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})")
     
     court_title = edoc.get('court_title')
-    if court_title != "-":
+    if court_title != "-" and court_title is not None:
         st.write(f"🏛️{court_title}")
     
     task_text = edoc.get('task_text')
-    if doc_title != "-":
+    if task_text != "-" and task_text is not None:
         st.write(f"{clean_edoc(task_text)}")
     
     ops_text = edoc.get('ops_text')
-    if doc_title != "-":
+    if ops_text != "-" and ops_text is not None:
         st.write(f"👩🏻‍⚖️{ops_text}")
     
     st.write("")
