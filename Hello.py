@@ -67,6 +67,7 @@ def get_ecourt_data(input_case_num):
     for elem in data:          
         docs.append(
             {
+                'date_rec' : elem.get('task_date', "-"),
                 'doc_title' : elem.get('doc_title', "-"),
                 'doc_eid' : elem.get('doc_eid', "-"),
                 'court_title' : elem.get('court_title', "-"),
@@ -100,6 +101,11 @@ case_num = st.text_input("Знайти інформацію за номером 
 edocs = get_ecourt_data(case_num)
 
 for edoc in edocs:
+          
+    date_rec = edoc.get('task_date')
+    if date_rec != "-":
+        st.write(f"{date_rec}")
+    
     doc_title = edoc.get('doc_title')
     if doc_title != "-":
         st.write(f"📃[{doc_title.title()}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})")
