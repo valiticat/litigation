@@ -158,15 +158,15 @@ with st.expander("Судові засідання", expanded=True):
             and court_date >= today):
             st.write(f"📅{court_date}")
         
-        court_title = elem.get('court')
-        if court_title != "-" and court_title is not None:
-            st.write(f"🏛️{court_title}")
-        
-        court_room = elem.get('court_room')
-        if court_room != "-" and court_room is not None:
-            st.write(f"🚪{court_room}")
-        
-        st.write("")
+            court_title = elem.get('court')
+            if court_title != "-" and court_title is not None:
+                st.write(f"🏛️{court_title}")
+            
+            court_room = elem.get('court_room')
+            if court_room != "-" and court_room is not None:
+                st.write(f"🚪{court_room}")
+            
+            st.write("")
 
 
 
