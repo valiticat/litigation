@@ -117,12 +117,13 @@ case_num = st.text_input("Знайти інформацію за номером 
 edocs = get_ecourt_data(case_num)
 grafic = get_grafic(case_num)
 
+# Show documents from the E-Court collection
 with st.expander("Документи ЕС", expanded=True):
 
     for edoc in edocs:
             
         date_rec = edoc.get('task_date')
-        if date_rec != "-":
+        if date_rec != "-" and date_rec is not None:
             st.write(f"Отримано: {date_rec}")
         
         doc_title = edoc.get('doc_title')
@@ -142,6 +143,26 @@ with st.expander("Документи ЕС", expanded=True):
             st.write(f"👩🏻‍⚖️{ops_text}")
         
         st.write("")
+
+# Show Grafic
+with st.expander("Судові засідання", expanded=True):
+
+    for elem in grafic:
+            
+        court_date = elem.get('date')
+        if court_date != "-" and court_date is not None:
+            st.write(f"📅{court_date}")
+        
+        court_title = elem.get('court')
+        if court_title != "-" and court_title is not None:
+            st.write(f"🏛️{court_title}")
+        
+        court_room = elem.get('court_room')
+        if court_room != "-" and court_room is not None:
+            st.write(f"🚪{court_room}")
+        
+        st.write("")
+
 
 
 
