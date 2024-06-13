@@ -150,11 +150,10 @@ with st.expander("Документи ЕС", expanded=True):
 with st.expander("Судові засідання", expanded=True):
 
     for elem in grafic:
-
-        st.write(today)
             
         court_date = elem.get('date')
-        if court_date != "-" and court_date is not None:
+        if (court_date != "-" and court_date is not None 
+            and court_date >= today):
             st.write(f"📅{court_date}")
         
         court_title = elem.get('court')
