@@ -77,6 +77,22 @@ def get_ecourt_data(input_case_num):
         )
     return docs
 
+@st.cache_data(ttl=600)
+def get_grafic(input_case_num):
+    input_case_num = input_case_num.replace('№', '').strip()
+    data = mongo_client.ltg_db.edr_graf.find({'case_num' : input_case_num})
+    docs = []
+    for elem in data:          
+        docs.append(
+            {
+                'date' : elem.get('date', "-"),
+                'court' : elem.get('court', "-"),
+                'room' : elem.get('room', "-")
+            }
+        )
+    return docs
+
+
 # Main Streamlit app starts here
 
 # st.markdown(
@@ -99,29 +115,34 @@ case_num = st.text_input("Знайти інформацію за номером 
 
 # Get the list of docs (task_text)
 edocs = get_ecourt_data(case_num)
+grafic = get_grafic(case_num)
 
-for edoc in edocs:
-          
-    date_rec = edoc.get('task_date')
-    if date_rec != "-":
-        st.write(f"Отримано: {date_rec}")
-    
-    doc_title = edoc.get('doc_title')
-    if doc_title != "-" and doc_title is not None:
-        st.write(f"📃[{doc_title.title()}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})")
-    
-    court_title = edoc.get('court_title')
-    if court_title != "-" and court_title is not None:
-        st.write(f"🏛️{court_title}")
-    
-    task_text = edoc.get('task_text')
-    if task_text != "-" and task_text is not None:
-        st.write(f"{clean_edoc(task_text)}")
-    
-    ops_text = edoc.get('ops_text')
-    if ops_text != "-" and ops_text is not None:
-        st.write(f"👩🏻‍⚖️{ops_text}")
-    
-    st.write("")
+with st.expander("Документи ЕС", expanded=True):
+
+    for edoc in edocs:
+            
+        date_rec = edoc.get('task_date')
+        if date_rec != "-":
+            st.write(f"Отримано: {date_rec}")
+        
+        doc_title = edoc.get('doc_title')
+        if doc_title != "-" and doc_title is not None:
+            st.write(f"📃[{doc_title.title()}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})")
+        
+        court_title = edoc.get('court_title')
+        if court_title != "-" and court_title is not None:
+            st.write(f"🏛️{court_title}")
+        
+        task_text = edoc.get('task_text')
+        if task_text != "-" and task_text is not None:
+            st.write(f"{clean_edoc(task_text)}")
+        
+        ops_text = edoc.get('ops_text')
+        if ops_text != "-" and ops_text is not None:
+            st.write(f"👩🏻‍⚖️{ops_text}")
+        
+        st.write("")
+
+
 
 
