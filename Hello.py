@@ -3,7 +3,7 @@ import hmac # Used in the authentication
 from streamlit.logger import get_logger
 import pymongo
 import re
-from datetime import date
+from datetime import datetime
 #from pymongo import MongoClient
 #from pymongo.server_api import ServerApi
 
@@ -117,7 +117,7 @@ case_num = st.text_input("Знайти інформацію за номером 
 # Get the list of docs (task_text)
 edocs = get_ecourt_data(case_num)
 grafic = get_grafic(case_num)
-today = date.today()
+today = datetime.today()
 
 # Show documents from the E-Court collection
 with st.expander("Документи ЕС", expanded=True):
@@ -151,7 +151,9 @@ with st.expander("Судові засідання", expanded=True):
 
     for elem in grafic:
             
-        court_date = elem.get('date')
+        format = '%d.%m.%Y %H:%M'
+        court_date = datetime.strptime(elem.get('date'), format)
+
         if (court_date != "-" and court_date is not None 
             and court_date >= today):
             st.write(f"📅{court_date}")
