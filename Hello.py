@@ -52,7 +52,7 @@ def clean_edoc(input_edoc):
     cleaned_edoc = re.sub(r'\n', ' ', cleaned_edoc)
     return cleaned_edoc
 
-# Connect to Database
+# Connect to the Database
 @st.cache_resource
 def init_connection():
     return pymongo.MongoClient(st.secrets["mongo"]["ltg_db"])
