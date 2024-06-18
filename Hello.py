@@ -150,9 +150,8 @@ with st.expander("Документи ЕС", expanded=True):
 with st.expander("Судові засідання", expanded=True):
 
     for elem in grafic:
-            
-        format = '%d.%m.%Y %H:%M'
-        court_date = datetime.strptime(elem.get('date'), format)
+           
+        court_date = elem.get('date')
 
         if (court_date != "-" and court_date is not None 
             and court_date >= today):
@@ -162,7 +161,7 @@ with st.expander("Судові засідання", expanded=True):
             if court_title != "-" and court_title is not None:
                 st.write(f"🏛️{court_title}")
             
-            court_room = elem.get('court_room')
+            court_room = elem.get('room')
             if court_room != "-" and court_room is not None:
                 st.write(f"🚪{court_room}")
             
