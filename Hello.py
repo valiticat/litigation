@@ -4,6 +4,7 @@ from streamlit.logger import get_logger
 import pymongo
 import re
 from datetime import datetime
+from datetime import timedelta
 #from pymongo import MongoClient
 #from pymongo.server_api import ServerApi
 
@@ -68,7 +69,7 @@ def get_ecourt_data(input_case_num):
     for elem in data:          
         docs.append(
             {
-                'date_rec' : elem.get('task_date', "-"),
+                'date_rec' : elem.get('task_created', "-"),
                 'doc_title' : elem.get('doc_title', "-"),
                 'doc_eid' : elem.get('doc_eid', "-"),
                 'court_title' : elem.get('court_title', "-"),
@@ -117,55 +118,59 @@ case_num = st.text_input("Знайти інформацію за номером 
 # Get the list of docs (task_text)
 edocs = get_ecourt_data(case_num)
 grafic = get_grafic(case_num)
-today = datetime.today()
+yesterday = datetime.today() - timedelta(days=1)
+
+#To avoid NaN values, set the rule of min input length
+notna_rule = 2
 
 # Show documents from the E-Court collection
-with st.expander("Документи ЕС", expanded=True):
+with st.expander(
+    f"Документи ЕС: {len(edocs)}", expanded=False):
 
     for edoc in edocs:
             
-        date_rec = edoc.get('task_date')
+        date_rec = edoc.get('date_rec')
         if date_rec != "-" and date_rec is not None:
             st.write(f"Отримано: {date_rec}")
         
         doc_title = edoc.get('doc_title')
-        if doc_title != "-" and doc_title is not None:
+        if doc_title != "-" and len(doc_title) > notna_rule:
             st.write(f"📃[{doc_title.title()}](https://cabinet.court.gov.ua/document/{edoc.get('doc_eid')})")
         
         court_title = edoc.get('court_title')
-        if court_title != "-" and court_title is not None:
+        if court_title != "-" and len(court_title) > notna_rule:
             st.write(f"🏛️{court_title}")
         
         task_text = edoc.get('task_text')
-        if task_text != "-" and task_text is not None:
+        if task_text != "-" and len(task_text) > notna_rule:
             st.write(f"{clean_edoc(task_text)}")
         
         ops_text = edoc.get('ops_text')
-        if ops_text != "-" and ops_text is not None:
+        if ops_text != "-" and len(ops_text) > notna_rule:
             st.write(f"👩🏻‍⚖️{ops_text}")
         
-        st.write("")
+        st.divider()
 
 # Show Grafic
-with st.expander("Судові засідання", expanded=True):
+with st.expander(
+    f"Судові засідання: {len(grafic)}", expanded=False):
 
     for elem in grafic:
            
         court_date = elem.get('date')
 
-        if (court_date != "-" and court_date is not None 
-            and court_date >= today):
+        if (court_date != "-" and court_date > (yesterday)):
             st.write(f"📅{court_date}")
         
             court_title = elem.get('court')
-            if court_title != "-" and court_title is not None:
+            if court_title != "-" and len(court_title) > notna_rule:
                 st.write(f"🏛️{court_title}")
             
             court_room = elem.get('room')
-            if court_room != "-" and court_room is not None:
+            if court_room != "-" and len(court_room) > notna_rule:
                 st.write(f"🚪{court_room}")
             
-            st.write("")
+            st.divider()
 
 
 
